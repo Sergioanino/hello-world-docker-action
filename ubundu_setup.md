@@ -498,3 +498,9 @@ php artisan cache:clear
 - [MongoDBCompass](https://www.mongodb.com/products/compass)
 - [Cloudinary](https://cloudinary.com/)
 - [Heroku](https://id.heroku.com/login)
+
+Github : Tags
+
+PS C:\Users\admin\Desktop\Flutter\flutter_mobile\hello-world-docker-action> git tag -a -m "My first action release" v1
+
+PS C:\Users\admin\Desktop\Flutter\flutter_mobile\hello-world-docker-action> git push --follow-tags
