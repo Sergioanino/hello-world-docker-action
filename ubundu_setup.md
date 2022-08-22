@@ -1,6 +1,6 @@
 # Installation de octobercms avec docker.
 
-> **Nous avons besoin de Ubundu : linux terminal**
+> **Nous avons besoin de Ubuntu : linux terminal**
 >
 > _1,2,3,4_.
 
@@ -38,7 +38,7 @@
 
 ## Introduction
 
-Nous allons installer Octobercms grâce à Docker et au terminal de linux : Ubundu . Pour en savoir plus sur le créateur [Sergio Nino](https://github.com/Sergioanino).
+Nous allons installer Octobercms grâce à Docker et au terminal de linux : Ubuntu . Pour en savoir plus sur le créateur [Sergio Nino](https://github.com/Sergioanino).
 
 ![screenshot.png](assets/screenshot.PNG)
 
