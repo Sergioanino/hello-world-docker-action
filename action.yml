@@ -10,6 +10,7 @@ outputs:
     description: "La fecha en la que nos conocimos"
 runs:
   using: "docker"
-  image: docker://pablokbs/hello-world-docker-action
+  image: sergioanino/hello-world-docker-action # Prend le container du pc.
+  # image: docker://sergioanino/hello-world-docker-action # Sur Dockerhub.
   args:
     - ${{ inputs.who-to-greet }}
