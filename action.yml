@@ -12,7 +12,7 @@ outputs:
     description: "The time we greeted you"
 runs:
   using: "docker"
-  image: "Dockerfile" # construit avec le dockerfile.
+  image: "/Dockerfile" # construit avec le dockerfile.
   # - name: Build & Push - Docker Image
   #   uses: mr-smithers-excellent/docker-build-push@v5
   #     with:
