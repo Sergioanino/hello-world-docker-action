@@ -1,4 +1,4 @@
-# test 10
+# test 4
 
 name: "Hello World"
 description: "Greet someone and record the time"
@@ -12,7 +12,7 @@ outputs:
     description: "The time we greeted you"
 runs:
   using: "docker"
-  image: "Dockerfile" # construit avec le dockerfile.
+  # image: "Dockerfile" # construit avec le dockerfile.
   # - name: Build & Push - Docker Image
   #   uses: mr-smithers-excellent/docker-build-push@v5
   #     with:
@@ -21,6 +21,6 @@ runs:
   #       username: ${{ secrets.DOCKER_USERNAME }}
   #       password: ${{ secrets.DOCKER_PASSWORD }}
   # image: sergioanino/hello-world-docker-action # Prend le container du pc.
-  # image: docker://sergioanino/hello-world-docker-action # Sur Dockerhub.
+  image: docker://sergioanino/hello-world-docker-action # Sur Dockerhub.
   args:
     - ${{ inputs.who-to-greet }}
