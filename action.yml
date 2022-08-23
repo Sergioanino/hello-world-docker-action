@@ -1,16 +1,23 @@
-name: "Hola Mundo"
-description: "Saludar a alguien y guardar la fecha"
+name: "Hello World"
+description: "Greet someone and record the time"
 inputs:
   who-to-greet: # id of input
-    description: "A quien saludar"
+    description: "Who to greet"
     required: true
-    default: "Mundo"
+    default: "World"
 outputs:
   time: # id of output
-    description: "La fecha en la que nos conocimos"
+    description: "The time we greeted you"
 runs:
   using: "docker"
   image: "Dockerfile" # construit avec le dockerfile.
+  # - name: Build & Push - Docker Image
+  #   uses: mr-smithers-excellent/docker-build-push@v5
+  #     with:
+  #       image: sergioanino/hello-world-docker-action
+  #       registry: docker.io
+  #       username: ${{ secrets.DOCKER_USERNAME }}
+  #       password: ${{ secrets.DOCKER_PASSWORD }}
   # image: sergioanino/hello-world-docker-action # Prend le container du pc.
   # image: docker://sergioanino/hello-world-docker-action # Sur Dockerhub.
   args:
