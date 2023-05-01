@@ -1,6 +1,6 @@
 # Installation de octobercms avec docker.
 
-> **Nous avons besoin de Ubuntu : linux terminal**
+> **Nous avons besoin de Ubuntu : Linux terminal**
 >
 > _1,2,3,4_.
 
@@ -10,35 +10,64 @@
 
 ## Table de matière
 
-- [Admin dashboard](#admin-dashboard)
+- [Installation de octobercms avec docker.](#installation-de-octobercms-avec-docker)
   - [Table de matière](#table-de-matière)
   - [Introduction](#introduction)
   - [Mise en place](#mise-en-place)
-    - [Section 7](#section-7)
-      - [Création du router authentification pour la page authentification](#création-du-router-authentification-pour-la-page-authentification)
-    - [Section 8](#section-8)
-      - [Création du formulaire de validation d’enregistrement & registre de navigation](#création-du-formulaire-de-validation-denregistrement--registre-de-navigation)
-    - [Section 9](#section-9)
-      - [Design du dashboard administratif](#design-du-dashboard-administratif)
-    - [Section 10](#section-10)
-      - [Backend pour le panel d'administration](#backend-pour-le-panel-dadministration)
-    - [Section 11](#section-11)
-      - [Authentication et protection des routes](#authentication-et-protection-des-routes)
-    - [Section 12](#section-12)
-      - [Créer le UI de la view Catégorie et lier le Backend de notre API à la page web](#créer-le-ui-de-la-view-catégorie-et-lier-le-backend-de-notre-api-à-la-page-web)
-    - [Section 13](#section-13)
-      - [Optimisation des routes pour éviter que notre application se redessine à tout moment](#optimisation-des-routes-pour-éviter-que-notre-application-se-redessine-à-tout-moment)
-    - [Section 14](#section-14)
-      - [Gestion des utilisateurs de l'application](#gestion-des-utilisateurs-de-lapplication)
-    - [Section 15](#section-15)
+    - [Mise en place avec ubuntu \& docker.](#mise-en-place-avec-ubuntu--docker)
+- [Install Nginx.](#install-nginx)
+- [Define mountable directories.](#define-mountable-directories)
+- [Define working directory.](#define-working-directory)
+- [Define default command.](#define-default-command)
+- [Deux solution pour indique une commande à shell qui vient du terminal(cmd)](#deux-solution-pour-indique-une-commande-à-shell-qui-vient-du-terminalcmd)
+  - [1 :](#1-)
+  - [2 : Les commande CMD ont va les réécrire entièrement : cette méthode va dépendre de l'ordre de commande sur le dockerfile.](#2--les-commande-cmd-ont-va-les-réécrire-entièrement--cette-méthode-va-dépendre-de-lordre-de-commande-sur-le-dockerfile)
+- [exemple 1 : changer le entrypoint sur dockerfile:](#exemple-1--changer-le-entrypoint-sur-dockerfile)
+- [Exemple 2 : Changer les entrypoint sur le dockerfile et le action.yml à même temps:](#exemple-2--changer-les-entrypoint-sur-le-dockerfile-et-le-actionyml-à-même-temps)
+    - [**Running CLI commands in the container**](#running-cli-commands-in-the-container)
+      - [Création du router authentification pour la page authentification.](#création-du-router-authentification-pour-la-page-authentification)
+    - [Pour me connecter à mysql du network de la database du flutter\_docker](#pour-me-connecter-à-mysql-du-network-de-la-database-du-flutter_docker)
+- [Pour Simplifier les choses : il faut utiliser docker-compose.yml quand nous utilisons les multi-containers : Nous pouvons écrire une séries de commandes pour écrire les commandes que normalement nous devons l'écrire à la chaines manuellement.](#pour-simplifier-les-choses--il-faut-utiliser-docker-composeyml-quand-nous-utilisons-les-multi-containers--nous-pouvons-écrire-une-séries-de-commandes-pour-écrire-les-commandes-que-normalement-nous-devons-lécrire-à-la-chaines-manuellement)
+    - [**Accessing the MySQL database**](#accessing-the-mysql-database)
+      - [Création du formulaire de validation d’enregistrement \& registre de navigation.](#création-du-formulaire-de-validation-denregistrement--registre-de-navigation)
+    - [**How to License a Container**](#how-to-license-a-container)
+      - [Open in vs code : Remote-Containers: Attach to running container](#open-in-vs-code--remote-containers-attach-to-running-container)
+  - [Use container vscode-server with conter online to codding anywhere.](#use-container-vscode-server-with-conter-online-to-codding-anywhere)
+- [OpenVSCode Server](#openvscode-server)
+  - [What is this?](#what-is-this)
+  - [Why?](#why)
+  - [Getting started](#getting-started)
+    - [Docker](#docker)
+      - [Custom Environment](#custom-environment)
+      - [Pre-installing VSCode extensions](#pre-installing-vscode-extensions)
+    - [Linux](#linux)
+    - [Securing access to your IDE](#securing-access-to-your-ide)
+    - [Deployment guides](#deployment-guides)
+  - [The scope of this project](#the-scope-of-this-project)
+  - [Documentation](#documentation)
+  - [Supporters](#supporters)
+  - [Contributing](#contributing)
+  - [Community \& Feedback](#community--feedback)
+  - [Legal](#legal)
+    - [**Section 10**](#section-10)
+      - [Backend pour le panel d'administration.](#backend-pour-le-panel-dadministration)
+    - [**Section 11**](#section-11)
+      - [Authentication et protection des routes.](#authentication-et-protection-des-routes)
+    - [**Section 12**](#section-12)
+      - [Créer le UI de la view Catégorie et lier le Backend de notre API à la page web.](#créer-le-ui-de-la-view-catégorie-et-lier-le-backend-de-notre-api-à-la-page-web)
+    - [**Section 13**](#section-13)
+      - [Optimisation des routes pour éviter que notre application se redessine à tout moment.](#optimisation-des-routes-pour-éviter-que-notre-application-se-redessine-à-tout-moment)
+    - [**Section 14**](#section-14)
+      - [Gestion des utilisateurs de l'application.](#gestion-des-utilisateurs-de-lapplication)
+    - [**Section 15**](#section-15)
       - [Télécharger des fichiers dans le backend et le lier avec Cloudinary et Déploiement de la version de notre application sur le web avec Heroku.](#télécharger-des-fichiers-dans-le-backend-et-le-lier-avec-cloudinary-et-déploiement-de-la-version-de-notre-application-sur-le-web-avec-heroku)
-- [Utilisation des outils suivant](#utilisation-des-outils-suivant)
+- [Utilisation des outils suivant :](#utilisation-des-outils-suivant-)
 
 ---
 
 ## Introduction
 
-Nous allons installer Octobercms grâce à Docker et au terminal de linux : Ubuntu . Pour en savoir plus sur le créateur [Sergio Nino](https://github.com/Sergioanino).
+Nous allons installer Octobercms grâce à Docker et au terminal de Linux : Ubuntu . Pour en savoir plus sur le créateur [Sergio Nino](https://github.com/Sergioanino).
 
 ![screenshot.png](assets/screenshot.PNG)
 
@@ -55,10 +84,26 @@ Aller sur Github et télécharger le projet avec un **clone** ou avec le **ZIP**
 
 ```
 wsl --install
+wsl --install -d <DistroName> : To change the distribution installed.
 ```
 
 ```
-wsl -l -v
+wsl -l -v : listing the distribution
+
+-l = --list
+-v = --verbose
+-o = --online
+-d = --distribution
+-s = --set-default-version
+-r = --running
+-1 = --quiet
+
+wsl -s Debian : to set the default distribution to Debian. Now running wsl npm init from Powershell will run the npm init command in Debian.
+
+Change directory to home
+The ~ can be used with wsl to start in the user's home directory. To jump from any directory back to home from within a WSL command prompt, you can use the command: cd ~.
+
+wsl ~
 ```
 
 ```
@@ -67,7 +112,185 @@ wsl --set-default-version 2
 
 ```
 wsl --set-version Ubuntu 2
+
+From Windows Command Prompt or PowerShell, you can open your default Linux distribution inside your current command line, by entering:
+
+wsl.exe.
+
+If you want to install additional distributions from inside a Linux/Bash command line (rather than from PowerShell or Command Prompt), you must use .exe in the command: wsl.exe --install -d <Distribution Name> or to list available distributions:
+
+wsl.exe -l -o
+
+Run a specific Linux distribution from PowerShell or CMD.
+To run a specific Linux distribution with a specific user, replace <Distribution Name> with the name of your preferred Linux distribution (ie. Debian) and <User Name> with the name of an existing user (ie. root).
+
+wsl --distribution <Distribution Name> --user <User Name>
+
+Update WSL :
+wsl --update
+
+Check WSL status :
+wsl --status
+
+Run as a specific user : sh
+wsl -u <Username>`, `wsl --user <Username>
+
+Change the default user for a distribution : sh
+<DistributionName> config --default-user <Username>
+
+Shutdown : sh
+wsl --shutdown
+
+Terminate : sh
+wsl --terminate <Distribution Name>
+
+Export a distribution to a TAR file : sh
+wsl --export <Distribution Name> <FileName>
+
+we want to know more : https://docs.microsoft.com/en-us/windows/wsl/basic-commands
+
+Next étapes : https://docs.microsoft.com/en-us/windows/wsl/setup/environment#set-up-your-linux-username-and-password
+
+Next étapes :
+https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-git
+
 ```
+
+Les containers vont juste vivre pendant l'execution d'un processus en particulier et s'arrêter par la suite :
+
+Le DOCKERFILE :
+Exemple de docker images - Nginx
+
+# Install Nginx.
+
+RUN \
+ add-apt-repository -y ppa:nginx/stable && \
+ apt-get update && \
+ apt-get install -y nginx && \
+ rm -rf /var/lib/apt/lists/\* && \
+ echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
+ chown -R www-data:www-data /var/lib/nginx
+
+# Define mountable directories.
+
+VOLUMES ["/etc/nginx/sites-enabled", "/etc/nginx/certs", ....]
+
+# Define working directory.
+
+WORKDIR /etc/nginx
+
+# Define default command.
+
+CMD ["nginx"] : commande default to the image the [nginx]
+
+info : Quand on fait courir une image de [ubuntu] sur la commande CMD ["bash"] : il faut tenir compte que les commande sur les terminals ne sont pas de processus comme un service cloud et de serveur DATABASE. Souvent un service sur va lire en Shell vont écouter un [inputs] du terminal et s'il ne trouve pas le terminal, il arrête d'execution.
+
+!!!!!! CMD vs ENTRYPOINT
+
+# Deux solution pour indique une commande à shell qui vient du terminal(cmd)
+
+## 1 :
+
+en: append a commande to the docker run command and that way it overrides the default command specified withing the image int this case. fr:
+Ajoutez une commande à la commande docker run et de cette façon, elle remplace la commande par défaut spécifiée dans l'image dans ce cas.
+
+Exemple : docker run ubuntu [COMMAND] - docker run ubuntu sleep 5
+
+Comment peut-t-on créer une image permanentent au moment de partir pour vouloir créer notre propre image.
+
+FROM Ubuntu
+CMS sleep 5
+
+Il faut seulement lui spécifier une commande de plus.
+
+shell format json format
+CMD commande param1--------------|-----CMD sleep 5
+CDM ["command", "param1"]--------|-----CMD ["sleep", "5"]
+
+Important il faut mettre "" entre chaque espace.
+
+- docker build -t ubuntu-sleeper .
+- docker run ubuntu-sleeper
+
+Exemple :
+
+- dockerfile :
+
+  FROM Ubuntu
+  CMD sleep 5
+
+Terminal : docker run ubuntu-sleeper sleep 10
+
+- Command at Startup: sleep 10
+
+- dockerfile :
+
+  FROM Ubuntu
+  ENTRYPOINT ["sleep"]
+
+terminal : docker run ubuntu-sleeper 10
+
+- Command at Startup: sleep 10
+
+sleep 10 : vient du [Entrypoint] et le 10 de la commande sur le terminal sleeper [10]
+
+## 2 : Les commande CMD ont va les réécrire entièrement : cette méthode va dépendre de l'ordre de commande sur le dockerfile.
+
+exemple :
+
+FROM Ubuntu
+ENTRYPOINT ["sleep"]
+CMD ["5"]
+
+terminal : docker run ubuntu-sleeper
+
+- Command at Start: sleep 5
+
+terminal : docker run ubuntu-sleeper 10
+
+- Command at Startup: sleep 10
+
+Ce qu'on va écrire sur le [terminal] : va sur écrire la commande CMD.
+
+# exemple 1 : changer le entrypoint sur dockerfile:
+
+terminal : docker run --entrypoint sleep2.0 ubuntu-sleeper 10
+
+- Commande at Startup : sleep2.0 10
+
+# Exemple 2 : Changer les entrypoint sur le dockerfile et le action.yml à même temps:
+
+- Dockerfile
+  FROM Ubuntu
+  ENTRYPOINT ["sleep"]
+  CMD ["5"]
+
+- pod-action.yml
+  apiVersion : v1
+  kind: Pod
+  metadata:
+  --name: ubuntu-sleeper-pod
+  spec:
+  --containers:
+  .....-name: ubuntu-sleeper
+  ------image: ubuntu-sleeper
+  ------command:["sleeper"]
+  ------args: ["10"]
+
+- Terminal :
+  docker run --name ubuntu-sleeper \
+  .....--entrypoint sleep2.0
+  .....ubuntu-sleeper 10
+
+<!-- info : La commande sur le terminal => avec le entrypoint va modifier la commande sur l'action yml à l'endroit commande -->
+
+Summarize there are two fields that correspond to two instructions in the dockerfile the commande field overrides the entry point instruction. The args field overrides the command instruction in the dockerfile. remember it's not the command field that overrides the CMD instruction in the dockerfile.
+
+En résumé, il y a deux champs qui correspondent à deux instructions dans le Dockerfile : le champ [command]remplace l'instruction point d'entrée. le champ [args] remplace l'instruction command dans le fichier docker. rappelez-vous que ce n'est pas le champ command qui remplace l'instruction CMD dans le Dockerfile.
+
+<!-- ? info :  -->
+
+Il existe trois manière de faire courir l'image
 
 ```
 lsb_release -a
@@ -386,6 +609,156 @@ php artisan cache:clear
 ```
 
 ---
+
+## Use container vscode-server with conter online to codding anywhere.
+
+1. Télécharger l'image de [openvscode-server](https://github.com/gitpod-io/openvscode-server). Si tu veux en savoir plus sur la documentation : du [package/librairie](https://github.com/gitpod-io/openvscode-server/tree/docs).
+
+- Commende sur le terminal : 
+```
+
+```
+
+# OpenVSCode Server
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-908a85?logo=gitpod)](https://gitpod.io/from-referrer)
+[![GitHub](https://img.shields.io/github/license/gitpod-io/openvscode-server)](https://github.com/gitpod-io/openvscode-server/blob/main/LICENSE.txt)
+[![Discord](https://img.shields.io/discord/816244985187008514)](https://www.gitpod.io/chat)
+
+## What is this?
+
+This project provides a version of VS Code that runs a server on a remote machine and allows access through a modern web browser. It's based on the very same architecture used by [Gitpod](https://www.gitpod.io) or [GitHub Codespaces](https://github.com/features/codespaces) at scale.
+
+<img width="1624" alt="Screenshot 2021-09-02 at 08 39 26" src="https://user-images.githubusercontent.com/372735/131794918-d6602646-4d67-435b-88fe-620a3cc0a3aa.png">
+
+## Why?
+
+VS Code has traditionally been a desktop IDE built with web technologies. A few years back, people started patching it in order to run it in a remote context and to make it accessible through web browsers. These efforts have been complex and error prone, because many changes had to be made across the large code base of VS Code.
+
+Luckily, in 2019 the VS Code team started to refactor its architecture to support a browser-based working mode. While this architecture has been adopted by Gitpod and GitHub, the important bits have not been open-sourced, until now. As a result, many people in the community still use the old, hard to maintain and error-prone approach.
+
+At Gitpod, we've been asked a lot about how we do it. So we thought we might as well share the minimal set of changes needed so people can rely on the latest version of VS Code, have a straightforward upgrade path and low maintenance effort.
+
+## Getting started
+
+### Docker
+
+- Start the server:
+```bash
+docker run -it --init -p 3000:3000 -v "$(pwd):/home/workspace:cached" gitpod/openvscode-server
+```
+- Visit the URL printed in your terminal.
+
+
+_Note_: Feel free to use the `nightly` tag to test the latest version, i.e. `gitpod/openvscode-server:nightly`.
+
+#### Custom Environment
+- If you want to add dependencies to this Docker image, here is a template to help:
+	```Dockerfile
+
+	FROM gitpod/openvscode-server:latest
+
+	USER root # to get permissions to install packages and such
+	RUN # the installation process for software needed
+	USER openvscode-server # to restore permissions for the web interface
+
+	```
+- For additional possibilities, please consult the `Dockerfile` for OpenVSCode Server at https://github.com/gitpod-io/openvscode-releases/
+
+#### Pre-installing VSCode extensions
+
+You can pre-install vscode extensions in such a way:
+
+```dockerfile
+FROM gitpod/openvscode-server:latest
+
+ENV OPENVSCODE_SERVER_ROOT="/home/.openvscode-server"
+ENV OPENVSCODE="${OPENVSCODE_SERVER_ROOT}/bin/openvscode-server"
+
+SHELL ["/bin/bash", "-c"]
+RUN \
+    # Direct download links to external .vsix not available on https://open-vsx.org/
+    # The two links here are just used as example, they are actually available on https://open-vsx.org/
+    urls=(\
+        https://github.com/rust-lang/rust-analyzer/releases/download/2022-12-26/rust-analyzer-linux-x64.vsix \
+        https://github.com/VSCodeVim/Vim/releases/download/v1.24.3/vim-1.24.3.vsix \
+    )\
+    # Create a tmp dir for downloading
+    && tdir=/tmp/exts && mkdir -p "${tdir}" && cd "${tdir}" \
+    # Download via wget from $urls array.
+    && wget "${urls[@]}" && \
+    # List the extensions in this array
+    exts=(\
+        # From https://open-vsx.org/ registry directly
+        gitpod.gitpod-theme \
+        # From filesystem, .vsix that we downloaded (using bash wildcard '*')
+        "${tdir}"/* \
+    )\
+    # Install the $exts
+    && for ext in "${exts[@]}"; do ${OPENVSCODE} --install-extension "${ext}"; done
+```
+
+### Linux
+
+- [Download the latest release](https://github.com/gitpod-io/openvscode-server/releases/latest)
+- Untar and run the server
+	```bash
+	tar -xzf openvscode-server-v${OPENVSCODE_SERVER_VERSION}.tar.gz
+	cd openvscode-server-v${OPENVSCODE_SERVER_VERSION}
+	./bin/openvscode-server # you can add arguments here, use --help to list all of the possible options
+	```
+
+  From the possible entrypoint arguments, the most notable ones are
+	- `--port` - the port number to start the server on, this is 3000 by default
+	- `--without-connection-token` - used by default in the docker image
+	- `--connection-token` & `--connection-token-file` for securing access to the IDE, you can read more about it in [Securing access to your IDE](#securing-access-to-your-ide).
+	-  `--host` - determines the host the server is listening on. It defaults to `localhost`, so for accessing remotely it's a good idea to add `--host 0.0.0.0` to your launch arguments.
+
+- Visit the URL printed in your terminal.
+
+_Note_: You can use [pre-releases](https://github.com/gitpod-io/openvscode-server/releases) to test nightly changes.
+
+### Securing access to your IDE
+
+Since OpenVSCode Server v1.64, you can access the Web UI without authentication (anyone can access the IDE using just the hostname and port), if you need some kind of basic authentication then you can start the server with `--connection-token YOUR_TOKEN`, the provided `YOUR_TOKEN` will be used and the authenticated URL will be displayed in your terminal once you start the server. You can also create a plaintext file with the desired token as its contents and provide it to the server with `--connection-token-file YOUR_SECRET_TOKEN_FILE`.
+
+If you want to use a connection token and are working with OpenVSCode Server via [the Docker image](https://hub.docker.com/r/gitpod/openvscode-server), you will have to edit the `ENTRYPOINT` in [the Dockerfile](https://github.com/gitpod-io/openvscode-releases/blob/main/Dockerfile) or modify it with the [`entrypoint` option](https://docs.docker.com/compose/compose-file/compose-file-v3/#entrypoint) when working with `docker-compose`.
+
+### Deployment guides
+
+Please refer to [Guides](https://github.com/gitpod-io/openvscode-server/tree/docs/guides) to learn how to deploy OpenVSCode Server to your cloud provider of choice.
+
+## The scope of this project
+
+This project only adds minimal bits required to run VS Code in a server scenario. We have no intention of changing VS Code in any way or to add additional features to VS Code itself. Please report feature requests, bug fixes, etc. in the upstream repository.
+
+> **For any feature requests, bug reports, or contributions that are not specific to running VS Code in a server context, please go to [Visual Studio Code - Open Source "OSS"](https://github.com/microsoft/vscode)**
+
+## Documentation
+
+All documentation is available in [the `docs` branch](https://github.com/gitpod-io/openvscode-server/tree/docs) of this project.
+
+## Supporters
+
+The project is supported by companies such as [GitLab](https://gitlab.com/), [VMware](https://www.vmware.com/), [Uber](https://www.uber.com/), [SAP](https://www.sap.com/), [Sourcegraph](https://sourcegraph.com/), [RStudio](https://www.rstudio.com/), [SUSE](https://rancher.com/), [Tabnine](https://www.tabnine.com/), [Render](https://render.com/) and [TypeFox](https://www.typefox.io/).
+
+## Contributing
+
+Thanks for your interest in contributing to the project 🙏. You can start a development environment with the following button:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer)
+
+To learn about the code structure and other topics related to contributing, please refer to the [development docs](https://github.com/gitpod-io/openvscode-server/blob/docs/development.md).
+
+## Community & Feedback
+
+To learn what others are up to and to provide feedback, please head over to the [Discussions](https://github.com/gitpod-io/openvscode-server/discussions).
+
+You can also follow us on Twitter [@gitpod](https://twitter.com/gitpod) or come [chat with us](https://www.gitpod.io/chat).
+
+## Legal
+This project is not affiliated with Microsoft Corporation.
+
 
 ### **Section 10**
 
